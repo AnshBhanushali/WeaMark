@@ -1,19 +1,21 @@
 {
   "name": "weamark",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A web application for weather forecast and market prices.",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["weather", "market prices", "agriculture"],
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "@headlessui/react": "^2.1.1",
     "@heroicons/react": "^2.1.4",
     "axios": "^1.7.2",
     "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
