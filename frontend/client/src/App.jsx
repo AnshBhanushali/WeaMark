@@ -10,7 +10,7 @@ function App() {
 
   const fetchWeather = async () => {
     try {
-      const response = await axios.get(`/api/weather`, { params: { location } });
+      const response = await axios.get(`http://localhost:5000/api/weather`, { params: { location } });
       setWeather(response.data);
     } catch (error) {
       console.error(error);
@@ -19,7 +19,7 @@ function App() {
 
   const fetchMarketPrices = async () => {
     try {
-      const response = await axios.get('/api/market-prices');
+      const response = await axios.get('http://localhost:5000/api/market-prices');
       setMarketPrices(response.data);
     } catch (error) {
       console.error(error);

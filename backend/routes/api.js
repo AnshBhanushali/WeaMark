@@ -1,7 +1,6 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const MarketPrice = require('../models/MarketPrice');
 const router = express.Router();
 const dotenv = require('dotenv');
 
@@ -22,11 +21,10 @@ const scrapeMarketPrices = async () => {
     });
     return prices;
   } catch (error) {
-    console.error(error);
+    console.error('Error scraping market prices:', error);
     throw new Error('Failed to scrape market prices');
   }
 };
-
 
 const fetchWeatherData = async (location) => {
   const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
@@ -41,17 +39,17 @@ const fetchWeatherData = async (location) => {
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching weather data:', error);
     throw new Error('Failed to fetch weather data');
   }
 };
-
 
 router.get('/market-prices', async (req, res) => {
   try {
     const prices = await scrapeMarketPrices();
     res.json(prices);
   } catch (error) {
+    console.error('Error in /market-prices route:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -66,6 +64,7 @@ router.get('/weather', async (req, res) => {
     const weatherData = await fetchWeatherData(location);
     res.json(weatherData);
   } catch (error) {
+    console.error('Error in /weather route:', error);
     res.status(500).json({ error: error.message });
   }
 });
