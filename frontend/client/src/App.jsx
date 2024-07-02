@@ -31,18 +31,33 @@ function App() {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Weather and Market Prices</h1>
-      <input
-        type="text"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        placeholder="Enter location"
-        className="border p-2 mb-4"
-      />
-      <button onClick={fetchWeather} className="bg-blue-500 text-white px-4 py-2 rounded">Get Weather</button>
-      {weather && <Weather data={weather} />}
-      <MarketPrices prices={marketPrices} />
+    <div className="min-h-screen bg-green-100 flex flex-col items-center justify-center p-4">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <h1 className="text-4xl font-bold text-center text-green-800 mb-6">Weather and Market Prices</h1>
+        <div className="flex flex-col items-center">
+          <input
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Enter location"
+            className="border border-green-300 p-3 rounded mb-4 w-full"
+          />
+          <button
+            onClick={fetchWeather}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300"
+          >
+            Get Weather
+          </button>
+        </div>
+        {weather && (
+          <div className="mt-6">
+            <Weather data={weather} />
+          </div>
+        )}
+        <div className="mt-6">
+          <MarketPrices prices={marketPrices} />
+        </div>
+      </div>
     </div>
   );
 }

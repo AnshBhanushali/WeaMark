@@ -1,41 +1,35 @@
 const express = require('express');
 const axios = require('axios');
-const cheerio = require('cheerio');
 const router = express.Router();
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const scrapeMarketPrices = async () => {
+const fetchMarketPrices = async () => {
+  const MARKET_API_KEY = process.env.MARKET_API_KEY;
   try {
-    const response = await axios.get('https://www.agweb.com/markets');
-    const html = response.data;
-    const $ = cheerio.load(html);
-
-    const prices = [];
-    $('table.market-price-table tr').each((index, element) => {
-      if (index === 0) return; // skip header row
-      const item = $(element).find('td').eq(0).text().trim();
-      const price = parseFloat($(element).find('td').eq(1).text().trim().replace('$', ''));
-      prices.push({ item, price });
+    const response = await axios.get('https://api.example.com/market-prices', { // Replace with the actual API URL
+      params: {
+        api_key: MARKET_API_KEY,
+      },
     });
-    return prices;
+    return response.data;
   } catch (error) {
-    console.error('Error scraping market prices:', error);
-    throw new Error('Failed to scrape market prices');
+    console.error('Error fetching market prices:', error);
+    throw new Error('Failed to fetch market prices');
   }
 };
 
 const fetchWeatherData = async (location) => {
   const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
   try {
-    const response = await axios.get(`http://api.openweathermap.org/data/2.5/forecast`, {
+    const response = await axios.get('http://api.openweathermap.org/data/2.5/forecast', {
       params: {
         q: location,
         appid: WEATHER_API_KEY,
         units: 'metric', // or 'imperial' for Fahrenheit
-        cnt: 7 // number of days
-      }
+        cnt: 7, // number of days
+      },
     });
     return response.data;
   } catch (error) {
@@ -46,7 +40,7 @@ const fetchWeatherData = async (location) => {
 
 router.get('/market-prices', async (req, res) => {
   try {
-    const prices = await scrapeMarketPrices();
+    const prices = await fetchMarketPrices();
     res.json(prices);
   } catch (error) {
     console.error('Error in /market-prices route:', error);
